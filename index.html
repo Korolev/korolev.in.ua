@@ -2,11 +2,39 @@
 <html>
 <head>
     <title>Michael Korolev - Personal Page</title>
+    <meta charset="utf-8">
     <!-- Bootstrap CSS-->
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="/css/darkstrap.css" rel="stylesheet" type="text/css">
     <!-- /Bootstrap CSS-->
     <link href="/css/main.css" rel="stylesheet" type="text/css">
+    <style>
+        #time {
+            color: #fff;
+            position: relative;
+            text-align: center;
+            font: 100 3em "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+        }
+        #holder {
+            height: 480px;
+            left: 50%;
+            margin: 0px 0 0 -320px;
+            position: relative;
+            top: 50%;
+            width: 640px;
+        }
+        #copy {
+            bottom: 0;
+            font: 300 .7em "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+            position: relative;
+            right: 1em;
+            text-align: right;
+        }
+        #copy a {
+            color: #fff;
+        }
+    </style>
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -51,12 +79,21 @@
             </a>
         </p>
     </div>
+    <div class="hero-unit">
+        <div id="time">
+            <span id="h"></span>:<span id="m"></span>:<span id="s"></span> <span id="ampm"></span> · <span
+                id="d"></span>/<span id="mnth"></span>
+        </div>
+        <div id="holder"></div>
+        <p id="copy">Demo of <a href="http://raphaeljs.com/">Raphael</a> - JavaScript Vector Library</p>
+    </div>
 </div>
 <!-- JS Secton -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <!-- Bootstrap JS-->
 <script language="javascript" src="/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <!-- /Bootstrap JS-->
+<script language="javascript" src="/js/lib/raphael.js" type="text/javascript"></script>
 <script language="javascript" src="/js/main.js" type="text/javascript"></script>
 </body>
 </html>
