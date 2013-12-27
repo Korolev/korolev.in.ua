@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html style="height:100%">
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <link rel="stylesheet" type="text/css" href="../common_resources/plugin/gritter/jquery.gritter.css"/>
+    <link rel="stylesheet" type="text/css" href="../common_resources/plugin/jquery-layout/jquery.layout.css"/>
+    <link rel="stylesheet" type="text/css" href="../common_resources/plugin/jquery-ui/jquery-ui-1.8.16.custom.css"/>
+    <link rel="stylesheet" type="text/css" href="../common_resources/css/common.css"/>
+
+    <!-- APP CSS-->
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- Main lib Scripts-->
+    <SCRIPT src="../common_resources/js/jquery-1.7.2.min.js"></SCRIPT>
+    <SCRIPT src="../common_resources/plugin/jquery-ui/jquery-ui-1.8.16.custom.min.js"></SCRIPT>
+    <SCRIPT src="../common_resources/plugin/jquery-layout/jquery.layout.js"></SCRIPT>
+    <SCRIPT src="../common_resources/js/Class.js"></SCRIPT>
+    <SCRIPT src="../common_resources/js/raphael-debug.js"></SCRIPT>
+    <SCRIPT src="../common_resources/plugin/gritter/jquery.gritter.min.js"></SCRIPT>
+
+    <!-- APP LIB Scripts-->
+    <script src="../common_resources/js/knockout-latest.debug.js"></script>
+    <script src="js/lib/moment.min.js"></script>
+
+    <!-- APP Scripts-->
+    <SCRIPT src="js/ApplicationConst.js"></SCRIPT>
+    <SCRIPT src="js/ko.additional.js"></SCRIPT>
+    <SCRIPT src="js/ViewModel/GanttChartViewModel.js"></SCRIPT>
+    <SCRIPT src="js/ViewModel/TaskViewModel.js"></SCRIPT>
+    <SCRIPT src="js/ViewModel/DiagramElement.js"></SCRIPT>
+    <SCRIPT src="js/Application.js"></SCRIPT>
+    <SCRIPT src="js/Toolbar.js"></SCRIPT>
+    <SCRIPT src="js/DialogController.js"></SCRIPT>
+    <SCRIPT src="../common_resources/js/user-notification-manager.js"></SCRIPT>
+
+</head>
+
+<body style="margin:0; padding:0; width:100%; height:100%;" data-bind="event:{keydown:$root.rowKeyPress}">
+<div id="content" >
+    <div id="miniheader">
+        <div id="toolbar"></div>
+    </div>
+    <!-- ko if: $root.selectedTask() -->
+    <div style="padding: 5px" id="settings-dialog"
+         data-bind="jqDialog : { autoOpen: false, modal: true, width:700, tabsId:'settings-tabs' }, template: { name: 'settings-template', data: selectedTask }, openDialog: selectedTask">
+    </div>
+    <!-- /ko -->
+    <div id="canvas" >
+        <div id="main_grid">
+            <table>
+                <thead>
+                    <tr data-bind="foreach: TABLE_HEADERS">
+                        <th data-bind="text:$data, attr:{class: 'column'+$index()}"></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: tasks">
+                    <tr data-bind="click:$root.selectRow, css:{selected:selected, has_child: hasChild, hidden: isHidden}">
+                        <td class="column0" ><span data-bind="text: $index()+1, visible:isDirty"></span></td>
+                        <td data-bind="event:{dblclick:$root.showSettings}">
+                            <div data-bind="if:note">
+                                <i class="icon icon-note">
+                                    <span class="tip" data-bind="text:note"></span>
+                                </i>
+                            </div>
+                        </td>
+                        <td class="overflow_hidden" data-bind="attr:{style:'padding-left:'+level()*20+'px'}">
+                            <div class="collapse" data-bind="css:{expand:isCollapsed}, click:$root.taskCollapse"></div>
+                            <input data-npp="0" class="text" data-bind="value:name,event:{focus:$root.focusRow, focusout:$root.focusOutRow}"/>
+                        </td>
+                        <td>
+                            <input data-npp="1" class="text" data-bind="value:duration,event:{focus:$root.focusRow}, disable:hasChild"/>
+                        </td>
+                        <td class="pointer" >
+                            <span class="bold_text" data-bind="text:start"></span>
+                        </td>
+                        <td class="pointer" >
+                            <span class="bold_text"  data-bind="text:finish"></span>
+                        </td>
+                        <td class="pointer" data-bind="click: $root.showPredecessorSettings">
+                            <span class="bold_text"  data-bind="text:predecessorIds"></span>
+                        </td>
+                        <td class="pointer"  data-bind="click: $root.showResourcesSettings">
+                            <span class="bold_text"  data-bind="text:outResources()"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="sidebar" class="sidebar">
+        <div id="sidebar_grid">
+            <table>
+                <thead>
+                <tr data-bind="foreach: $root.calendarHeaders">
+                    <th colspan="7" data-bind="text:$data"></th>
+                </tr>
+                <tr class="forweek22x21" data-bind="foreach: $root.calendarHeaders">
+                    <th colspan="7">
+                        <ul class="week22x21">
+                            <li>S</li><li>M</li><li>T</li><li>W</li><li>T</li><li>F</li><li class="last">S</li>
+                        </ul>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr data-bind="foreach: $root.calendarHeaders, attr:{style:'height:'+tasks().length*23+'px'}">
+                    <td class="off">&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class="off end">&nbsp;</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script id="settings-template" type="text/html">
+    <div id="settings-tabs">
+        <ul data-bind="foreach:SETTINGS_TABS">
+            <li><a data-bind="attr:{href:'#tabs-'+$data},text:$data"></a></li>
+        </ul>
+        <div data-bind="foreach:{data: SETTINGS_TABS, as: 'tabName'}">
+            <div data-bind="attr:{id:'tabs-'+ tabName}, template:{name:tabName+'-settings-template', data: $parent}"></div>
+        </div>
+    </div>
+</script>
+<script id="General-settings-template" type="text/html">
+    <div class="settings-pane">
+        <label>Task name</label>
+        <input type="text" data-bind="value:name">
+        <label>Duration</label>
+        <input type="text" data-bind="value:duration">
+        <label>Start</label>
+        <input type="text" data-bind="value:start">
+        <label>Finish</label>
+        <input type="text" data-bind="value:finish">
+        <div data-bind="if: hasChild && !parentId">
+            <label data-bind="attr:{for:'isflow'+id}">
+                <input type="checkbox" data-bind="checked:isFlow, attr:{id:'isflow'+id}">
+                Is Flow
+            </label>
+        </div>
+        <div data-bind="if: parentId && hasChild">
+            <label data-bind="attr:{for:'isflow'+id}">
+                <input type="checkbox" data-bind="checked:isFlow, attr:{id:'isflow'+id}">
+                Is Milestone
+            </label>
+        </div>
+    </div>
+</script>
+<script id="Resources-settings-template" type="text/html">
+    <div class="settings-pane">
+
+    </div>
+    Resources
+</script>
+<script id="Predecessor-settings-template" type="text/html">
+    <div class="settings-pane">
+        <table >
+            <thead>
+                <th class="notitle"></th>
+                <th class="notitle"></th>
+                <th>Task Name</th>
+            </thead>
+            <tbody data-bind="foreach: $root.getDirtyTasks()">
+                <tr>
+                    <td class="notitle">
+                        <input type="checkbox"
+                               data-bind="disable:$data == $root.selectedTask(),
+                                          attr:{value:$data.id, id:$data.id},
+                                          checked:$root.selectedTask().predecessor">
+                    </td>
+                    <td class="notitle" data-bind="text: $index()+1"></td>
+                    <td><label data-bind="text: name, attr:{for:$data.id}"></label></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</script>
+<script id="Notes-settings-template" type="text/html">
+    <div class="settings-pane">
+        <label>Notes</label>
+        <textarea data-bind="value:note, valueUpdate: 'input'"></textarea>
+    </div>
+</script>
+</body>
+</html>

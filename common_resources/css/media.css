@@ -1,0 +1,30 @@
+@media only screen and (max-width:1024px), (max-height:768px){
+    BODY {
+        margin: 0 !important;
+    }
+
+    #phHeader {
+        display:none;
+    }
+    #wr_toolbar .toolbar-button .toolbar-button-text,
+    #wr_toolbar .ui-button .ui-button-text{
+        font-size: 11px;
+    }
+    .toolbar-button,
+    #wr_toolbar .ui-button{
+        padding: 0 8px 0 5px;
+    }
+
+    .field-wrapper:hover .pull-right,
+    .field-wrapper.selected .pull-right{
+        display: none !important;
+    }
+
+    .field-wrapper.selected{
+        border: 1px dotted #00265A;
+    }
+
+    #wr_toolbar .ui-button-icon-primary.ui-icon{
+        margin: 0 5px 0 0;
+    }
+}

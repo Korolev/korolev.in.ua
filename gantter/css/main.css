@@ -1,0 +1,283 @@
+.toolbar_delimiter {
+    margin-left: 5px;
+    display: inline;
+}
+
+.pointer{
+    cursor: pointer;
+}
+.hidden{
+    display: none;
+}
+.overflow_hidden{
+    overflow: hidden;
+}
+/*ICONS*/
+.ui-button-icon-primary.ui-icon.settingsIcon{
+    background-image: url(../img/sprites1.png) !important;
+    background-position: 0px -594px;
+}
+.ui-button-icon-primary.ui-icon.unindentIcon{
+    background-image: url(../img/sprites1.png) !important;
+    background-position: 0px -131px;
+}
+.ui-button-icon-primary.ui-icon.indentIcon{
+    background-image: url(../img/sprites1.png) !important;
+    background-position: 0px -263px;
+}
+.ui-button-icon-primary.ui-icon.aboveIcon{
+    background-image: url(../img/sprites1.png) !important;
+    background-position: 0px -1305px;
+}
+.ui-button-icon-primary.ui-icon.belowIcon{
+    background-image: url(../img/sprites1.png) !important;
+    background-position: 0px -1371px;
+}
+.ui-button-icon-primary.ui-icon.deleteIcon{
+    background-image: url(../img/sprites1.png) !important;
+    background-position: 0px -1173px;
+}
+.collapse{
+    display: none;
+    float: left;
+    width: 10px;
+    height: 10px;
+    margin: 4px 0 0 4px;
+    background-image: url(../img/sprites1.png) !important;
+    background-position: 0px -659px;
+    padding: 0;
+    cursor: pointer;
+}
+
+.collapse.expand{
+    background-position: 0px -784px;
+}
+
+.has_child .collapse{
+    display: block;
+}
+/*ICONS*/
+
+#canvas, #sidebar{
+    padding: 0px;
+    font-size: 85%;
+    overflow: auto !important;
+}
+#canvas{
+    overflow-x: scroll !important;
+    overflow-y: hidden !important;
+}
+
+table {
+    table-layout: fixed;
+    vertical-align: middle;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-color: gray;
+}
+
+table thead th, table tr td.column0{
+    background: none repeat scroll 0 0 #F5F5F5;
+    border-bottom: 1px solid #ACA899;
+    border-left: 1px solid #FFFFFF;
+    border-right: 1px solid #ACA899;
+    color: #000000;
+    font-style: normal;
+    font-weight: normal;
+    text-align: center;
+}
+
+td{
+    border-bottom: 1px solid #C0C0C0;
+    border-right: 1px solid #C0C0C0;
+    cursor: default;
+    padding: 0;
+    line-height: 22px;
+    height: 22px;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+}
+td, th {
+    text-overflow: clip;
+    white-space: nowrap;
+}
+
+table tbody tr{
+    height: 22px;
+}
+tr.has_child td input.text,
+tr.has_child td .bold_text{
+    font-weight: bold;
+    width: auto;
+}
+
+td input.text{
+    width: 98%;
+    padding: 0 1%;
+    height: 20px;
+    margin: 0;
+    border: none;
+    /*background-color: #ffcc66;*/
+    background-color: transparent;
+}
+
+
+#main_grid{
+    position: absolute;
+    width: 100%;
+    min-width: 960px;
+}
+#main_grid table{
+    width: 100%;
+}
+#sidebar_grid{
+    position: absolute;
+    width: 100%;
+    min-width: 960px;
+}
+
+#main_grid table thead th{
+    height: 46px;
+    line-height: 46px;
+}
+
+#main_grid table td > span{
+    padding: 3px;
+}
+
+#sidebar_grid table thead th{
+    height: 22px;
+    line-height: 22px;
+}
+
+tr td.column0,tr th.column0{
+    max-width: 40px;
+    width: 40px;
+}
+.column1{
+    width: 8%;
+}
+.column2{
+    width: 35%;
+}
+.column3{
+    width: 6%;
+}
+.column4{
+    width: 14%;
+}
+.column5{
+    width: 14%;
+}
+.column6{
+    width: 11%;
+}
+.column7{
+    width: 8%;
+}
+#sidebar_grid table td{
+    border-color: transparent;
+}
+#sidebar_grid table td.off{
+    background-image: url('../img/dots.png');
+}
+#sidebar_grid table td.off.end{
+    border-right: 1px dotted #000;
+}
+
+tr.selected td,
+tr.selected td input{
+    background-color: #ffeecc;
+}
+
+.settings-pane{
+
+}
+
+.settings-pane > label{
+    display: block;
+    font-weight: bold;
+}
+
+
+.settings-pane textarea{
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.settings-pane table{
+    width: 100%;
+}
+.settings-pane table td,
+.settings-pane table th{
+    padding: 4px;
+}
+
+.settings-pane table .notitle{
+    width: 20px;
+    text-align: center;
+}
+
+.icon{
+    display: inline-block;
+    margin: 3px 3px -4px 3px;
+    background-image: url(../img/sprites1.png);
+    width: 16px;
+    height: 17px;
+    position: relative;
+}
+
+.icon-note{
+    background-position: 0px -2600px;
+}
+
+i.icon-note span{
+    position: absolute;
+    display: none;
+    width: 150px;
+    background-color: #000;
+    background-color: rgba(0,0,0,0.8);
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: left;
+    padding: 5px;
+    top: 5px;
+    left:10px;
+    z-index: 9999;
+    border-radius: 6px;
+    font-style: normal;
+}
+
+i.icon-note:hover span,
+i.icon-note span:hover,
+i.icon-note:hover span:hover{
+    display: block;
+}
+.forweek22x21 th{
+    padding: 0px;
+    margin: 0px;
+}
+.week22x21{
+    display: block;
+    width:166px;
+    height: 22px;
+    list-style: none;
+    margin: 0;
+    padding:0;
+}
+.week22x21 li{
+    float: left;
+    width: 23px;
+    border-right: 1px solid #ccc;
+}
+
+.week22x21 li.last{
+    border-right: 0px solid #ccc;
+    width: 21px;
+}
+
